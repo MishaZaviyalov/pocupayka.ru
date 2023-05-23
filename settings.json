@@ -1,0 +1,29 @@
+
+  {
+    "database" : {
+      "host" : "localhost",
+      "reserve" : "192.168.1.55",
+      "database" : "pokupayka",
+      "login" : "root",
+      "password" : "root"
+    },
+    "admin" : {
+      "login" : "c1c224b03cd9bc7b6a86d77f5dace40191766c485cd55dc48caf9ac873335d6f",
+      "password" : "008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601",
+      "hash" : "sha256",
+      "isHash" : true
+    },
+    "contact" : {
+      "whatsapp": "https://wa.me/79586355331",
+      "vk": "https://vk.com/pot_b_cmetahe",
+      "telegram" : "https://t.me/cmethka",
+      "telephone" : "89586355331"
+    },
+    "status": {
+      "0" : "В рассмотрении",
+      "1" : "В изготовление",
+      "2" : "Передан в доставку",
+      "3" : "Отменён",
+      "4" : "Получено"
+    }
+  }
