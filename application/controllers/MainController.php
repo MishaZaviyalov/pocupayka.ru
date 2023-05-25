@@ -17,7 +17,7 @@ class MainController extends Controller
         parent::__construct($route);
         $this->view->layout = 'other';
 
-        $_SESSION['authorize']['id'] = 2;
+        $_SESSION['authorize']['id'] = 3;
     }
 
     /**
@@ -126,14 +126,6 @@ class MainController extends Controller
             }
             else $this->view->message('error', 'Неверный адрес электронной почты или пароль!');
         }
-        $this->view->render('Покупайка');
-    }
-
-    /**
-     * Действие контроллера main на странице восстановление аккаунта
-     * @return void
-     */
-    public function recoveryAction(){
         $this->view->render('Покупайка');
     }
 
@@ -277,11 +269,36 @@ class MainController extends Controller
         $this->view->render('Покупайка', $vars);
     }
 
+    /**
+     * Действие контроллера main на странице профиля пользователя
+     * @return void
+     */
     function profileAction(){
         $m = new Main();
+        $user_id = $_SESSION['authorize']['id'];
         $vars = [
-
+            'dataProfile' => $m->getUserData($user_id),
+            'dataOrder' => $m->getOrderByUser($user_id),
         ];
         $this->view->render('Покупайка', $vars);
+    }
+
+    /**
+     * Действие контроллера main на странице восстановление аккаунта
+     * @return void
+     */
+    public function recoveryAction(){
+        if(!isset($_SESSION['authorize']['id'])){
+            $this->view->redirect("");
+        }
+
+        if(!empty($_POST)){
+            if(!$this->model->recoveryValidate($_POST)){
+                $this->view->message('Ошибка', $this->model->error);
+            }
+            $this->model->updatePassword($_POST);
+            $this->view->message('Успешно', "Пароль изменён!");
+        }
+        $this->view->render('Покупайка');
     }
 }

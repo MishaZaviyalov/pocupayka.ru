@@ -1,3 +1,17 @@
+<?php
+function cartPrint(){
+    $i = 0;
+    $cart = $_SESSION['cart'] ?? null;
+    if($cart != null){
+        foreach ($cart as $element){
+            $i += $element;
+        }
+        return '<a href="/assortment/card" class="header__enter-link">Корзина ('.$i.')</a>';
+    }
+    else return '<a href="/assortment/card" class="header__enter-link">Корзина</a>';
+}
+
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -34,7 +48,8 @@
                     <a href="/registration" class="header__enter-link">Регистрация</a>
                     <?php } else {?>
                         <a href="/profile" class="header__enter-link">Профиль</a>
-                        <a href="/assortment/card" class="header__enter-link">Корзина</a>
+                        <?=cartPrint()?>
+                        <!--                        <a href="/assortment/card" class="header__enter-link">Корзина</a>-->
                         <a href="/logout" class="header__enter-link">Выход</a>
                     <?php }?>
                 </div>

@@ -301,7 +301,53 @@ class Main extends Model{
 
     function getOrderByUser($id){
         $params = [ 'userID' => $id];
-        return $this->db->row("select `id_order`, `address`, date_format(`created_at`, '%H:%i | %d.%m.%Y') as 'date', SUM(`Quantity`) as 'quantity' from `order` inner join `order_items` on `id_order` = `order_id` where `user_id` = :userID GROUP by `id_order`", $params);
+        return $this->db->row("select `id_order`, `status`, `address`, date_format(`created_at`, '%H:%i | %d.%m.%Y') as 'date', SUM(`Quantity`) as 'quantity', SUM(`order_items`.`price`) as `price` from `order` inner join `order_items` on `id_order` = `order_id` where `user_id` = :userID GROUP by `id_order`", $params);
     }
 
+    function getUserByInfoFullName($FirstName, $SecondName){
+        $params = [ 'first_name' => $FirstName,
+            'second_name' => $SecondName];
+        return $this->db->column('select count(*) from user where `first_name` = :first_name and `second_name` = :second_name', $params);
+    }
+
+    /**
+     * Валидация данных для восстановления
+     * @param $post
+     * @return bool
+     */
+    function recoveryValidate($post) {
+        $countEmail = $this->getCountEmail($post['Email']);
+        $countPersonalInfo = $this->getUserByInfoFullName($post['First_name'], $post['Second_name']);
+
+        if($post['password'] != $post['repeat-password']){
+            $this->error = "Пароли не совпадают!";
+            return false;
+        } else if($countEmail == 0){
+            $this->error = "Учётной записи с подобной электронной почты не существует!";
+            return false;
+        } else if($countPersonalInfo == 0){
+            $this->error = "Учётной записи с подобными личными данными не существует!";
+            return false;
+        } else if(!preg_match('^[a-zA-Z0-9\!\"\№\;\%\:\?\*\(\)\_\+]+$', $post['password'])){
+            $this->error = "Пароль должен состоять из латинский символов и содержать спец. символы!";
+            return false;
+        } else if(count($post['password']) < 6){
+            $this->error = "Длина пароля должна быть больше 6 символов!";
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Обновить пароль пользователя
+     * @param $post
+     * @return void
+     */
+    function updatePassword($post){
+        $params = [
+            'email' => $post['Email'],
+            'password' => hash('sha256', $post['password'])
+        ];
+        $this->db->query("update `user` set `password` = :password where `email` = :email", $params);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 require 'application\lib\Dev.php';
 use application\core\Router;
 

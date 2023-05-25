@@ -10,6 +10,11 @@
     margin: 0;
 }
 
+*::selection{
+    background-color: #f05462;
+    color: #ffffff;
+}
+
 a{
     color: var(--text-color);
     text-decoration: none;

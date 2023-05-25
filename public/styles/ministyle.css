@@ -337,12 +337,7 @@ main{
     transform: translateY(-5px);
 }
 
-.header__enter-links{
-    gap: 100px;
-}
-
 .header__enter-links a{
-
     text-decoration: none;
     color: #cda200;
 }
@@ -687,6 +682,87 @@ main{
     text-align: center;
     margin-bottom: 20px;
 }
+
+.profile_user{
+    display: flex;
+    justify-content: space-around;
+    width: 500px;
+    padding: 20px 30px;
+    border-radius: 20px;
+    -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    border: #ffffff 1px solid;
+    transition: 1s linear;
+}
+
+.profile_user:hover{
+    border: #ffca00;
+    border-top: #ffca00 1px solid;
+    border-left: #ffca00 1px solid;
+}
+
+.profile_user_content{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile_user img{
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 10px;
+}
+
+.profile_user .profile_user__description_info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.profile_user .profile_user__description_info a{
+    text-align: center;
+    text-decoration: none;
+    color: #242424;
+    background-color: #ffca00;
+    font-size: 16px;
+    padding: 5px 10px;
+    border: #242424 1px solid;
+    transition: 1s;
+}
+
+.profile_user .profile_user__description_info a:hover{
+    color: #ffca00;
+    background-color: #242424;
+    border-color: #ffca00;
+}
+
+.profile_user__orders, .profile_user__orders table{
+    width: 100%;
+}
+
+.profile_user__orders table thead{
+    text-align: center;
+    font-weight: 700;
+}
+
+.profile_user__orders table thead th{
+    padding-bottom: 12px;
+}
+
+.profile_user__orders table tbody{
+    text-align: center;
+}
+
+.profile_user__orders table tr > td{
+    padding-bottom: 7px;
+}
+
+
 
 
 

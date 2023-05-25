@@ -160,21 +160,40 @@ class Admin extends Model {
         return $this->db->row('SELECT * FROM product ORDER BY id DESC LIMIT :start, :max', $params);
     }
 
+    /**
+     * Получить список заказов с инициалами пользователей
+     * @return array|false
+     */
     function getOrdersWithUsers(){
         $params=[];
         return $this->db->row("select `id_order` as `id_order`, `Address` as `Address`, `status` as `status`, date_Format(`created_at`, '%H:%i | %d.%m.%Y') as `created_at`, concat(`first_name`,' ', left(`second_name`, 1), '.') as `Person_name` from `order` inner join `user` on `id_user` = `user_id` order by `created_at`", $params);
     }
 
+    /**
+     * Получить инфомация о конкретном товаре
+     * @param $id
+     * @return array|false
+     */
     function getOrder($id){
         $params=['id' => $id];
         return $this->db->row("select `id_order` as `id_order`, `Address` as `Address`, `status` as `status`, date_Format(`created_at`, '%H:%i | %d.%m.%Y') as `created_at`, concat(`first_name`,' ', left(`second_name`, 1), '.') as `Person_name` from `order` inner join `user` on `id_user` = `user_id` where `id_order` = :id order by `created_at` limit 1", $params);
     }
 
+    /**
+     * Получить список продуктов к заказу
+     * @param $id
+     * @return array|false
+     */
     function getOrderProduct($id){
         $params=['id' => $id];
         return $this->db->row("select product.id, product.name, order_items.Quantity, order_items.Price from order_items INNER JOIN `product` on product.id = order_items.Product_ID where order_items.Order_ID = :id", $params);
     }
 
+    /**
+     * Генерация статусов для заказов
+     * @param $info
+     * @return string
+     */
     function statusFormGenerate($info){
         $statuses = require 'application/config/status.php';
         $formSelect = '<select name="status">';
@@ -190,12 +209,22 @@ class Admin extends Model {
         return $formSelect;
     }
 
+    /**
+     * Получить количество заказов по номеру
+     * @param $id
+     * @return bool
+     */
     function getOrderByID($id){
         $params=['id' => $id];
         $mas = $this->db->column('select count(*) from `order` where `id_order` = :id', $params);
         return $mas == 1;
     }
 
+    /**
+     * Обновить статус заказа
+     * @param $id
+     * @return bool
+     */
     function updateStatus($post, $id){
         $statuses = require 'application/config/status.php';
         $params = [
