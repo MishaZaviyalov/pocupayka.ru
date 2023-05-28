@@ -31,7 +31,7 @@ class AdminController extends Controller
 
         if (!empty($_POST)) {
             if (!$this->model->loginValidate($_POST)) {
-                $this->view->message('error', $this->model->error);
+                $this->view->message('Ошибка', $this->model->error);
             }
             $_SESSION['admin'] = true;
             $this->view->location('admin/add');
@@ -46,14 +46,14 @@ class AdminController extends Controller
     public function addAction(){
         if (!empty($_POST)) {
             if (!$this->model->productValidate($_POST, 'add')) {
-                $this->view->message('error', $this->model->error);
+                $this->view->message('Ошибка', $this->model->error);
             }
             $id = $this->model->productAdd($_POST);
             if (!$id) {
-                $this->view->message('success', 'Ошибка в запросе!');
+                $this->view->message('Ошибка', 'Ошибка в запросе!');
             }
             $this->model->productUploadImage($id);
-            $this->view->message('success', 'Продукт добавлен!');
+            $this->view->message('Успешно', 'Продукт добавлен!');
         }
         $this->view->render('Панель администратора');
     }
@@ -74,7 +74,7 @@ class AdminController extends Controller
             if($_FILES['img']['tmp_name']){
                 $this->model->productUploadImage($this->route['id']);
             }
-            $this->view->message("success", "Объект обнавлён!");
+            $this->view->message("Успешно", "Объект обновлён!");
             $this->view->location('admin/products');
         }
         $vars = [

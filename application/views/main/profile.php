@@ -1,4 +1,3 @@
-<?php  //debug($dataOrder);?>
 <div class="container">
     <div class="profile_user_content">
         <div class="profile_user">
@@ -6,7 +5,7 @@
             <div class="profile_user__description_info">
                 <p class="profile_user__full_name"><?=$dataProfile[0]['fullName']?></p>
                 <p class="profile_user__email"><?=$dataProfile[0]['Email']?></p>
-<!--                <a href="/recovery">Сменить пароль</a>-->
+                <a href="/recovery">Сменить пароль</a>
             </div>
         </div>
         <div class="profile_user__orders">

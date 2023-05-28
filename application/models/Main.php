@@ -22,19 +22,19 @@ class Main extends Model{
         $re_password = $post['repeat-password'];
 
         if(iconv_strlen($first_name) < 1 or $second_name < 1){
-            $this->error = 'Personal data must be filled';
+            $this->error = 'Персональные данные должны быть заполнены';
             return false;
         } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            $this->error = 'Invalid email format';
+            $this->error = 'Неверный формат электронной почты';
             return false;
         } else if($this->getCountEmail($email) == 1){
-            $this->error = 'Email already exists in the system';
+            $this->error = 'Подобный электронный адрес уже существует в системе';
             return false;
         } else if(iconv_strlen($password) < 1){
-            $this->error = 'Password must be filled';
+            $this->error = 'Пароль должен быть заполнене';
             return false;
         } else if($password != $re_password){
-            $this->error = 'Passwords must be similar';
+            $this->error = 'Пароль и повтор пароля должны совпадать';
             return false;
         }
         return true;
@@ -50,14 +50,14 @@ class Main extends Model{
         $password = $post['password'];
 
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            $this->error = 'Invalid email format';
+            $this->error = 'Неверный формат электронной почты';
             return false;
         }
         else if($this->getCountEmail($email) < 1){
-            $this->error = 'Email does not exist in the system';
+            $this->error = 'Подобный адрес электронной почты отсутствует в системе';
             return false;
         } else if(iconv_strlen($password) < 1){
-            $this->error = 'All fields must be filled!';
+            $this->error = 'Все поля дожный быть заполнены';
         }
         return true;
     }
@@ -276,7 +276,7 @@ class Main extends Model{
         $FlatNumber = $post['FlatNumber'];
 
         if(count($Street) == 0 || count($NumberHouse) == 0 || count($Entrance) == 0 || count($FlatNumber) == 0){
-            $this->error = "Все поля должны быть заполнены!";
+            $this->error = "Все поля должны быть заполнены";
             return false;
         }
         return true;
@@ -320,19 +320,19 @@ class Main extends Model{
         $countPersonalInfo = $this->getUserByInfoFullName($post['First_name'], $post['Second_name']);
 
         if($post['password'] != $post['repeat-password']){
-            $this->error = "Пароли не совпадают!";
+            $this->error = "Пароли не совпадают";
             return false;
         } else if($countEmail == 0){
-            $this->error = "Учётной записи с подобной электронной почты не существует!";
+            $this->error = "Подобный адрес электронной почты отсутствует в системе";
             return false;
         } else if($countPersonalInfo == 0){
-            $this->error = "Учётной записи с подобными личными данными не существует!";
+            $this->error = "Учётной записи с подобными личными данными не существует";
             return false;
         } else if(!preg_match('^[a-zA-Z0-9\!\"\№\;\%\:\?\*\(\)\_\+]+$', $post['password'])){
-            $this->error = "Пароль должен состоять из латинский символов и содержать спец. символы!";
+            $this->error = "Пароль должен состоять из латинский символов и содержать спец. символы";
             return false;
         } else if(count($post['password']) < 6){
-            $this->error = "Длина пароля должна быть больше 6 символов!";
+            $this->error = "Длина пароля должна быть больше 6 символов";
             return false;
         }
         return true;

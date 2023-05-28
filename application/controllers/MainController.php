@@ -116,7 +116,7 @@ class MainController extends Controller
 
         if(!empty($_POST)){
             if(!$this->model->userAuthorizationValidate($_POST)){
-                $this->view->message('error', $this->model->error);
+                $this->view->message('Ошибка', $this->model->error);
             }
            $id = $this->model->authorizationAccount($_POST);
             if($id != false)
@@ -124,7 +124,7 @@ class MainController extends Controller
                 $_SESSION['authorize']['id'] = $id;
                 $this->view->location('');
             }
-            else $this->view->message('error', 'Неверный адрес электронной почты или пароль!');
+            else $this->view->message('Ошибка', 'Неверный адрес электронной почты или пароль!');
         }
         $this->view->render('Покупайка');
     }
