@@ -31,6 +31,19 @@ class Admin extends Model {
     }
 
     /**
+     * Проверка набора расширений для указанного наименования файла в глобальном массиве _Files
+     * @param $info
+     * @param $name_file
+     * @param ...$type
+     * @return bool
+     */
+    public function checkTypeFile($info, $name_file, ...$type) : bool{
+        foreach ($type as $element)
+            if($info[$name_file]['type'] == "image/$element") return true;
+        return false;
+    }
+
+    /**
      * Проверка корректности информации при добавлении и изменение товара
      * @param $post
      * @param $type
@@ -40,8 +53,8 @@ class Admin extends Model {
         $nameLen = iconv_strlen($post['name']);
         $descriptionLen = iconv_strlen($post['description']);
         $price = (float)(isset($post['price']) ? $post['price'] : 0);
-        if ($nameLen < 3 or $nameLen > 100) {
-            $this->error = 'Наименование должно содержать от 3 до 100 символов';
+        if ($nameLen < 2 or $nameLen > 100) {
+            $this->error = 'Наименование должно содержать от 2 до 100 символов';
             return false;
         } elseif ($descriptionLen < 10 or $descriptionLen > 500) {
             $this->error = 'Описание должно содержать от 10 до 100 символов';
@@ -53,6 +66,11 @@ class Admin extends Model {
 
         if(empty($_FILES['img']['tmp_name']) and $type == 'add') {
             $this->error = "Изображение не выбрано";
+            return false;
+        }
+
+        if(!empty($_FILES['img']) and $this->checkTypeFile($_FILES, "img", "png", "jpeg")){
+            $this->error = "Формат изображения должен быть .png или .jpg";
             return false;
         }
         return true;

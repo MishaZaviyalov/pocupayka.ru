@@ -2,6 +2,7 @@
 
 namespace application\controllers;
 use application\core\Controller;
+use application\core\View;
 use application\lib\Pagination;
 use application\models\Main;
 use http\Params;
@@ -17,7 +18,7 @@ class MainController extends Controller
         parent::__construct($route);
         $this->view->layout = 'other';
 
-        $_SESSION['authorize']['id'] = 3;
+        //$_SESSION['authorize']['id'] = 3;
     }
 
     /**
@@ -69,6 +70,10 @@ class MainController extends Controller
 
         if(isset($_SESSION['SORT']) and $_SESSION['SORT'] == 1) $vars['data'] = $this->model->getProductList($this->route, 2);
         else if (isset($_SESSION['SORT']) and $_SESSION['SORT'] == 2) $vars['data'] = $this->model->getProductList($this->route, 1);
+
+        if(count($vars['data']) == 0) {
+            View::errorCode(404);
+        }
 
 
         $this->view->render('Ассортимент', $vars);

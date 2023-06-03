@@ -31,10 +31,13 @@ class Main extends Model{
             $this->error = 'Подобный электронный адрес уже существует в системе';
             return false;
         } else if(iconv_strlen($password) < 1){
-            $this->error = 'Пароль должен быть заполнене';
+            $this->error = 'Поля пароль и повтор пароля должны быть заполнены!';
             return false;
         } else if($password != $re_password){
-            $this->error = 'Пароль и повтор пароля должны совпадать';
+            $this->error = 'Поля пароль и повтор пароля должны совпадать';
+            return false;
+        } else if(!preg_match('^[a-zA-Z0-9\!\"\№\;\%\:\?\*\(\)\_\+]+$', $password) and count($password) < 5){
+            $this->error = "Пароль должен состоять из латинский символов и содержать спец. символы, а длина пароля должна  быть больше 5 значений";
             return false;
         }
         return true;
@@ -57,7 +60,7 @@ class Main extends Model{
             $this->error = 'Подобный адрес электронной почты отсутствует в системе';
             return false;
         } else if(iconv_strlen($password) < 1){
-            $this->error = 'Все поля дожный быть заполнены';
+            $this->error = 'Все поля должны быть заполнены';
         }
         return true;
     }
@@ -320,7 +323,7 @@ class Main extends Model{
         $countPersonalInfo = $this->getUserByInfoFullName($post['First_name'], $post['Second_name']);
 
         if($post['password'] != $post['repeat-password']){
-            $this->error = "Пароли не совпадают";
+            $this->error = "Поля пароль и повтор пароля не совпадают";
             return false;
         } else if($countEmail == 0){
             $this->error = "Подобный адрес электронной почты отсутствует в системе";
