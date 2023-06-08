@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 03 2023 г., 18:05
+-- Время создания: Июн 08 2023 г., 22:30
 -- Версия сервера: 8.0.29
 -- Версия PHP: 8.1.5
 
@@ -40,13 +40,11 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`ID_order`, `Address`, `status`, `created_at`, `User_ID`) VALUES
-(6, 'Город Москва, улица Липовая, дом 3, подъезд 2, квартира 22', 'В изготовление', '2023-05-08 05:17:43', 1),
 (12, 'Город Москва, улица Липовая, дом 3, подъезд 2, квартира 21', 'Отменён', '2023-05-12 21:57:52', 3),
 (13, 'Город Москва, улица Каскадная, дом 28, подъезд 1, квартира 3', 'Отменён', '2023-05-12 22:01:28', 3),
 (14, 'Город Москва, улица Липа, дом 28, подъезд 3, квартира 28', 'В рассмотрении', '2023-05-12 22:04:19', 3),
 (15, 'Город Москва, улица Обручева, дом 19 к 2, подъезд 1, квартира 28', 'Передан в доставку', '2023-05-13 19:38:43', 8),
-(16, 'Город Москва, улица ajsndnsa, дом asnduas, подъезд sunda, квартира ausabd', 'В рассмотрении', '2023-05-19 10:27:59', 9),
-(17, 'Город Москва, улица Москва, дом 28, подъезд 12, квартира 3', 'В рассмотрении', '2023-06-03 00:54:25', 4);
+(16, 'Город Москва, улица ajsndnsa, дом asnduas, подъезд sunda, квартира ausabd', 'В рассмотрении', '2023-05-19 10:27:59', 9);
 
 -- --------------------------------------------------------
 
@@ -60,24 +58,20 @@ CREATE TABLE `order_items` (
   `Product_ID` bigint NOT NULL,
   `Quantity` int NOT NULL,
   `Price` decimal(20,2) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `order_items`
 --
 
 INSERT INTO `order_items` (`ID_Order_Item`, `Order_ID`, `Product_ID`, `Quantity`, `Price`) VALUES
-(1, 6, 71, 2, '20000.00'),
-(2, 6, 80, 3, '10.00'),
 (7, 12, 68, 1, '500.00'),
 (8, 12, 70, 1, '10000.00'),
 (9, 12, 71, 1, '20000.00'),
 (10, 13, 68, 3, '500.00'),
 (11, 14, 71, 1, '20000.00'),
 (12, 15, 80, 1, '10.00'),
-(13, 16, 71, 1, '20000.00'),
-(14, 17, 76, 1, '12130.00'),
-(15, 17, 78, 1, '27000.00');
+(13, 16, 71, 1, '20000.00');
 
 -- --------------------------------------------------------
 
@@ -90,7 +84,7 @@ CREATE TABLE `product` (
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `description` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'Отсуствует',
   `price` float NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `product`
@@ -124,19 +118,14 @@ CREATE TABLE `user` (
   `Second_Name` varchar(35) NOT NULL,
   `Email` varchar(200) NOT NULL,
   `Password` varchar(64) NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `user`
 --
 
 INSERT INTO `user` (`ID_user`, `First_Name`, `Second_Name`, `Email`, `Password`) VALUES
-(1, 'Василий', 'Помидоркин', 'isip_mpt@gmail.com', 'Password123'),
-(2, 'Александр', 'Завьялов', 'a@a.ru', '688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6'),
 (3, 'Завьялов', 'Михаил', 'b@b.ru', '008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601'),
-(4, 'Password123', 'asd', 'misha@g.ru', '008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601'),
-(6, 'somebody', 'somebodyвич', 'b@c.ru', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3'),
-(7, 'Михаил', 'Фокин', 'asd3@gmail.com', 'ec70738ba57e398813db972bdabe2945cdb483d7647bda5976f5c36294a158f2'),
 (8, 'Завьялов', 'Александр', 'lilalexk4@gmail.com', '21d8076695cc7f51a307e7441b078edb3a9daf0c437622ef04ef75a99f2ec158'),
 (9, 'Оксанчик', 'Иванова', 'gmail@gmail.com', '008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601');
 
@@ -187,7 +176,7 @@ ALTER TABLE `order`
 -- AUTO_INCREMENT для таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `ID_Order_Item` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Order_Item` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `product`
@@ -199,7 +188,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `ID_user` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_user` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -209,14 +198,14 @@ ALTER TABLE `user`
 -- Ограничения внешнего ключа таблицы `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `FK_User` FOREIGN KEY (`User_ID`) REFERENCES `user` (`ID_user`);
+  ADD CONSTRAINT `FK_User` FOREIGN KEY (`User_ID`) REFERENCES `user` (`ID_user`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `order_items`
 --
 ALTER TABLE `order_items`
-  ADD CONSTRAINT `FK_Order` FOREIGN KEY (`Order_ID`) REFERENCES `order` (`ID_order`),
-  ADD CONSTRAINT `FK_Product` FOREIGN KEY (`Product_ID`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `FK_Order` FOREIGN KEY (`Order_ID`) REFERENCES `order` (`ID_order`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_Product` FOREIGN KEY (`Product_ID`) REFERENCES `product` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -30,14 +30,13 @@ class Main extends Model{
         } else if($this->getCountEmail($email) == 1){
             $this->error = 'Подобный электронный адрес уже существует в системе';
             return false;
-        } else if(iconv_strlen($password) < 1){
+        }
+        else if(iconv_strlen($password) < 1){
             $this->error = 'Поля пароль и повтор пароля должны быть заполнены!';
             return false;
-        } else if($password != $re_password){
+        }
+        else if($password != $re_password){
             $this->error = 'Поля пароль и повтор пароля должны совпадать';
-            return false;
-        } else if(!preg_match('^[a-zA-Z0-9\!\"\№\;\%\:\?\*\(\)\_\+]+$', $password) and count($password) < 5){
-            $this->error = "Пароль должен состоять из латинский символов и содержать спец. символы, а длина пароля должна  быть больше 5 значений";
             return false;
         }
         return true;

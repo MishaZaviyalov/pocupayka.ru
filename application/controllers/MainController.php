@@ -71,7 +71,7 @@ class MainController extends Controller
         if(isset($_SESSION['SORT']) and $_SESSION['SORT'] == 1) $vars['data'] = $this->model->getProductList($this->route, 2);
         else if (isset($_SESSION['SORT']) and $_SESSION['SORT'] == 2) $vars['data'] = $this->model->getProductList($this->route, 1);
 
-        if(count($vars['data']) == 0) {
+        if(count($vars['data']) == 0 and isset($this->route['page'])) {
             View::errorCode(404);
         }
 
@@ -163,6 +163,10 @@ class MainController extends Controller
      * @return void
      */
     public function addAction(){
+        if(!isset($_SESSION['authorize']['id'])){
+            $this->view->redirect("authorization");
+        }
+
         $id = $this->route['id'];
         $this->model->addToCart($id, 1);
         $this->view->redirect('assortment/card');
